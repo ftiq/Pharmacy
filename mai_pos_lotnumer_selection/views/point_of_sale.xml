@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="pos_config_settings_inherited_form_view" model="ir.ui.view">
+            <field name="name">res.config.setting.form.extended.view</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="point_of_sale.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//block[@id='pos_interface_section']" position="before">
+                	<block title="Lot/Serial Number Configuration" id="pos_lot_config">
+                		<setting >
+	                        <field name="allow_pos_lot"/>
+	                        <div class="content-group mt16" invisible="not allow_pos_lot">
+                                <field name="lot_expire_days"/>
+                            </div>
+	                    </setting>
+	                    <setting >
+	                        <field name="pos_lot_receipt"/>
+	                    </setting>
+                	</block>
+                   
+                     <div class="row mt16 o_settings_container" id="pos_login_screen">
+                        <div class="col-xs-12 col-md-6 o_setting_box" id="category_reference">
+                            <div class="o_setting_left_pane">
+                                <field name="allow_pos_lot"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="allow_pos_lot" string="Lot/Serial Number Config"/>
+                                <div class="text-muted">
+                                    Lot/Serial Number Configuration
+                                </div>
+                                <div class="content-group" invisible="allow_pos_lot == False">
+                                    <div class="row mt16">
+                                        <label class="col-md-3 o_light_label" for="lot_expire_days"/>
+                                        <field name="lot_expire_days"/>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-md-3 o_light_label" for="pos_lot_receipt"/>
+                                        <field name="pos_lot_receipt"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="odoo_pos_config_view_form" model="ir.ui.view">
+            <field name="name">account.move.form.inherit.view</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='name']" position="after">
+                    <field name="pos_lot_ids" widget="many2many_tags"/>
+                </xpath>
+            </field>
+        </record>
+
+        <template id="report_invoice_document_inherit_discount" inherit_id="account.report_invoice_document">
+            <xpath expr="//th[@name='th_priceunit']" position="before">
+                <th class="text-left" name="th_lot">
+                    <span>
+                        POS Lot/Serial
+                    </span>
+                </th>
+            </xpath>
+            <xpath expr="//td[@name='td_price_unit']" position="before">
+                <td class="text-left">
+                    <span id="pos_lot_ids" t-esc="', '.join(map(lambda x: (x.lot_name), line.pos_lot_ids))"/>
+                </td>
+            </xpath>
+        </template>
+    </data>
+</odoo>

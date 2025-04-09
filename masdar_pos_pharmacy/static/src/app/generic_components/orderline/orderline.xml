@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-extend="Orderline" t-inherit="point_of_sale.Orderline" t-inherit-mode="extension">
+        <xpath expr="//span[hasclass('span_product_image')]" position="replace"/>
+
+        <xpath expr="//div[hasclass('sh_order_line_detail')]" position="replace">
+                <li class="price-per-unit">
+                    <em t-esc="line.qty" class="qty fst-normal fw-bolder me-1"/>
+                        *
+                        <em t-esc="line.uom_qty_line" class="qty fst-normal fw-bolder me-1"/>
+
+                        <t t-if="pos.mainScreen.component.name == 'ProductScreen'">
+                        <span t-if="this.uom_category_is_medicine() and line.product.manage_multi_uom_via_price and line.product.product_price_by_uom.length">
+                            <span class="active" style="cursor:pointer;" t-esc="line.unit"
+                                  t-on-click="(ev) => this.onShowUomClick(line)"/>
+                        </span>
+                    </t>
+                        <t t-else="">
+                        <t t-if="line.unit" t-esc="line.unit"/>
+                    </t>
+                        x
+                        <s t-esc="line.oldUnitPrice" t-if="line.oldUnitPrice"/>
+                        <t t-esc="line.unitPrice"/>
+                        <span t-if="line.unit"> / <t t-esc="line.unit"/></span>
+                    <t t-slot="default" />
+                    <t t-if="this.env.services.pos.config.sh_display_stock and props.line.product_type == 'product'">
+                        <li class="sh_stock_li_orderline" t-if="env.services.pos.get_order() and !env.services.pos.get_order().finalized">
+                            <span class="product-image-icon sh_orderline_stock_icon me-1 ms-1" t-on-click="() => this.env.services.pos.showStock(props.line.productId)">
+                                <i class="fa fa-building-o" aria-hidden="true"></i>
+                            </span>
+                        </li>
+                    </t>
+                </li>
+        </xpath>
+    </t>
+</templates>

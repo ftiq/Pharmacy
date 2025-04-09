@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+	<t t-name="EditListPopup1_masdar_pos" t-inherit="mai_pos_lotnumer_selection.EditListPopup1"
+       t-inherit-mode="extension" owl="1">
+		<xpath expr="//div[hasclass('modal-header')]" position="replace">
+			<div class="modal-header">
+                <span class="sub-title" t-esc="props.name"/>
+            </div>
+		</xpath>
+		<xpath expr="//main[hasclass('modal-body')]" position="replace">
+			<main class="modal-body">
+				<div>
+					<div class="list-lines">
+						<table>
+								<colgroup>
+									<col width='40%'/>
+									<col width='35%'/>
+									<col width='25%'/>
+								</colgroup>
+								<t t-foreach="state.product_lot" t-key="product_lot.id" t-as="product_lot">
+									<t t-if="product_lot.total_qty !== 0">
+										<tr t-att-data-lot="product_lot.name" t-on-click="() => this.addNewLotLine(product_lot.name)">
+											<td>
+												<div>
+                                                    Expiration Date :
+													<t t-esc="product_lot.expiration_date_masdar_pos"/>
+												</div>
+											</td>
+											<td>
+                                                Quantity:
+												<span t-esc="env.utils.formatProductQty(product_lot.total_qty)" />
+											</td>
+											<td>
+												<t t-esc="product_lot.location_id_origin[1]" />
+												<i class="fa fa-plus-square add_lot_number" aria-hidden="true"
+                                                      style="color: #fff;font-size: 25px;"></i>
+<!--												<i class="fa fa-plus-square add_lot_number" aria-hidden="true"
+                                                       style="color: #fff;font-size: 25px;"></i>-->
+											</td>
+										</tr>
+									</t>
+								</t>
+							</table>
+					</div>
+					<div style="display: none;">
+						<t t-if="pos.config.allow_pos_lot">
+							<t t-if="state.product_lot">
+								<div style="height: 350px; overflow: auto;">
+									<table>
+										<colgroup>
+											<col width='20%'/>
+										</colgroup>
+										<t t-foreach="state.product_lot" t-key="product_lot.id" t-as="product_lot">
+											<t t-if="product_lot.total_qty !== 0">
+												<tr>
+													<td class="entered_item_qty">
+														<input type="text" t-att-data-lot="product_lot.name"
+                                                           class="input_qty" value="1" style=" display: none;"/>
+<!--														<input type="text" t-att-data-lot="product_lot.expiration_date"
+                                                           class="input_qty" value="1"
+                                                           style="font-size: 15px;width: 52px;min-height: 9px;height: 25px;padding: -1px;"/>-->
+													</td>
+												</tr>
+											</t>
+										</t>
+									</table>
+								</div>
+							</t>
+						</t>
+					</div>
+				</div>
+			</main>
+		</xpath>
+	</t>
+</templates>

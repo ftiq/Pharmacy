@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="pos_pharmacy_management.ShowUomOptionsPopup" owl="1">
+        <div class="popup wk_popup uom-options-popup">
+            <header class="modal-header">
+                <t class="modal-title" t-esc="props.title" />
+            </header>
+            <main class="modal-body uom_popup_body">
+                <t t-foreach="props.line.product.product_price_by_uom" t-as="uom_line" t-key="uom_line">
+                    <div class="uom_line" t-att-uom-id="uom_line" t-on-click="(ev) => this.onShowUomClick(ev, uom_line)">
+                        <t t-set="line" t-value="pos.product_uom_price[uom_line]"/>
+                        <span class="uom_line_qty" t-esc="line.qty"/>
+                        <div class="uom_line_name" t-esc="line.uom_id[1]" />
+                    </div>
+                </t>
+            </main>
+            <footer class="footer modal-footer">
+                <div class="button cancel btn btn-lg btn-primary" t-on-click="confirm"> Confirm </div>
+                <div class="button cancel btn btn-lg btn-primary" t-on-click="cancel"> Cancel </div>
+            </footer>
+        </div>
+    </t>
+</templates>

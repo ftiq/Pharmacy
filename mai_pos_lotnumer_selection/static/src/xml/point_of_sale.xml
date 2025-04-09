@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="mai_pos_lotnumer_selection.EditListPopup1">
+        <div class="popup popup-text edit-list-popup" t-ref="root" style="max-width: 700px;">
+            <div class="modal-header">
+                <h4 class="modal-title title">
+                    <t t-esc="props.title" />
+                </h4>
+                <span class="sub-title" t-esc="props.name"/>
+            </div>
+            <main class="modal-body">
+                <div style="display: flex;">
+                    <div class="list-lines"  style="flex: 0 0 50%;">
+                        <t t-foreach="state.array" t-as="item" t-key="item._id">
+                            <EditListInput item="item" createNewItem.bind="createNewItem" removeItem="() => this.removeItem(item._id)"
+                                            deletable="_hasMoreThanOneItem()" onInputChange.bind="onInputChange" />
+                        </t>
+                    </div>
+                    <div  style="flex: 1;">
+                        <t t-if="pos.config.allow_pos_lot">
+                            <t t-if="state.product_lot">
+                                <div >
+                                    <input placeholder="Search Lot" style="width: 160px;
+                                        border: 1px solid #cecbcb;
+                                        padding: 10px 20px;
+                                        padding-left: 38px;
+                                        margin: 6px;
+                                        background-color: white;
+                                        border-radius: 20px;
+                                        font-family: Helvetica, Verdana, Arial;
+                                        font-size: 13px;" class="search_lot" t-on-keyup="searchLotCust" t-att-value="state.qstr"
+                                        />
+                                    <span class="search-clear search_lot"></span>
+                                </div>
+                                <div style="height: 350px; overflow: auto;">
+                                    <table >
+                                        <colgroup>
+                                            <col width='50%' />
+                                            <col width='20%' />
+                                            <col width='20%' />
+                                            <col width='5%' />
+
+                                        </colgroup>
+                                        <t t-foreach="state.product_lot" t-key="product_lot.id" t-as="product_lot">
+                                            <tr >
+                                                <td>
+                                                    <div t-att-value="product_lot.id">
+                                                        <t t-esc="product_lot.name" />
+                                                        <t t-esc="product_lot.expiration_date" />
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="product_lot.total_qty" />
+                                                    <t t-esc="product_lot.expiration_date" />
+
+                                                </td>
+                                                
+                                                <td class="entered_item_qty">
+                                                    <input type="text" t-att-data-lot="product_lot.name" class="input_qty" value="1" style="font-size: 15px;width: 52px;min-height: 9px;height: 25px;padding: -1px;"/>
+                                                    <input type="text" t-att-data-lot="product_lot.expiration_date" class="input_qty" value="1" style="font-size: 15px;width: 52px;min-height: 9px;height: 25px;padding: -1px;"/>
+
+                                                </td>
+                                                <td>
+                                                   <i class="fa fa-plus-square add_lot_number" aria-hidden="true" style="color: green;font-size: 25px;cursor: pointer" t-att-data-lot="product_lot.name" t-on-click="() => this.addNewLotLine(product_lot.name)"></i>
+                                                   <i class="fa fa-plus-square add_lot_number" aria-hidden="true" style="color: green;font-size: 25px;cursor: pointer" t-att-data-lot="product_lot.expiration_date" t-on-click="() => this.addNewLotLine(product_lot.name)"></i>
+
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </table>
+                                </div>
+                            </t>
+                        </t>
+                    </div>
+                </div>
+            </main>
+            <footer class="footer footer-flex modal-footer">
+                <div class="button confirm highlight btn btn-lg btn-primary" t-on-click="confirm">
+                    Ok
+                </div>
+                <div class="button cancel btn btn-lg btn-secondary" t-on-click="cancel">
+                    Cancel
+                </div>
+            </footer>
+        </div>
+    </t>
+
+   
+
+    <t t-name="OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
+        <xpath expr="//OrderWidget/Orderline/ul" position="replace">
+           <ul t-if="line.pack_lot_lines" style="display: flex;">
+                Lot/Serial : 
+                <li t-foreach="line.pack_lot_lines" t-as="lot" t-key="lot.cid">
+                     <t t-esc="lot.lot_name"/>,
+                     <t t-esc="product_lot.expiration_date"/>,
+
+                </li>
+            </ul>
+        </xpath>
+    </t>
+</templates>
