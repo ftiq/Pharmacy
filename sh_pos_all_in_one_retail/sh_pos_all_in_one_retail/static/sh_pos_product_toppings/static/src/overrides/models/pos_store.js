@@ -7,6 +7,8 @@ import { ToppingsPopup } from "@sh_pos_all_in_one_retail/static/sh_pos_product_t
 patch(PosStore.prototype, {
     //@override
     async addProductToCurrentOrder(product, options = {}) {
+        alert("addProductToCurrentOrder @")
+        alert("Pharmacy/sh_pos_all_in_one_retail/sh_pos_all_in_one_retail/static/sh_pos_product_toppings/static/src/overrides")
         var self = this;
         await super.addProductToCurrentOrder(product, options = {})
         var category;
