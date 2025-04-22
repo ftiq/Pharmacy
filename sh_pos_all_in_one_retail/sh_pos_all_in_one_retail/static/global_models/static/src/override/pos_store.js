@@ -42,23 +42,28 @@ patch(PosStore.prototype, {
         }
         return result
     },
-    async addProductToCurrentOrder(product, options = {}) {
+    async addProductToCurrentOrder(product, options = {}) { 
+        alert("addProductToCurrentOrder")
         var order = this.get_order()
         var self = this;
         if (this.config.sh_show_qty_location && this.config.sh_display_stock && product.type == "product") {
+            alert("step1")
             var sh_min_qty = this.config.sh_min_qty
             var location_id = this.config.sh_pos_location ? this.config.sh_pos_location[0] : false
 
             var stocks = this.db.get_stock_by_product_id(product.id)
             var stock_qty = 0.00
             if (location_id && stocks && stocks.length) {
+                alert("step2")
                 var sh_stock = stocks.filter((stock) => stock.location_id == location_id)
                 if (sh_stock && sh_stock.length) {
+                    alert("step3")
                     stock_qty = sh_stock[0].quantity
                 }
             }
             var line = order.get_orderlines().filter((x) => x.product.id == product.id)
             if (line && line.length) {
+                alert("step4")
                 let restrict_popup = false
                 let qty = 0.00
                 for (let ol of line) {
@@ -68,6 +73,7 @@ patch(PosStore.prototype, {
                     }
                 }
                 if (restrict_popup) {
+                    alert("step5")
                     const { confirmed, payload } = await this.env.services.popup.add(ProductStockRestrict, {
                         title: _t(product.display_name),
                         body: _t('Minimum availabe quantity is ' + sh_min_qty),
@@ -75,32 +81,41 @@ patch(PosStore.prototype, {
                     });
 
                     if (confirmed) {
+                        alert("step6")
                         await super.addProductToCurrentOrder(...arguments)
                     }
                 } else {
+                    alert("step7")
                     await super.addProductToCurrentOrder(...arguments)
                 }
             } else {
+                alert("step8")
                 if ((stock_qty - 1) <= sh_min_qty) {
+                    alert("step9")
                     const { confirmed, payload } = await this.env.services.popup.add(ProductStockRestrict, {
                         title: _t(product.display_name),
                         body: _t('Minimum availabe quantity is ' + sh_min_qty),
                         'product': product,
                     });
                     if (confirmed) {
+                        alert("step10")
                         await super.addProductToCurrentOrder(...arguments)
                     }
                 } else {
+                    alert("step11")
                     await super.addProductToCurrentOrder(...arguments)
                 }
             }
         } else {
+            alert("step12")
             await super.addProductToCurrentOrder(...arguments)
         }
 
         if( self.config.sh_pos_enable_product_variants && self.config.sh_pos_display_alternative_products ){
+            alert("step13")
             var alternative_products = []
             if(product.sh_alternative_products && product.sh_alternative_products.length){
+                alert("step14")
                 for (let sub_pro_id of product.sh_alternative_products){
                     var sub_pro = self.db.product_by_id[sub_pro_id]    
                     alternative_products.push(sub_pro)
