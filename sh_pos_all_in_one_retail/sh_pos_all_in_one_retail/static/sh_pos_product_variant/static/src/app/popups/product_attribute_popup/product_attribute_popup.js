@@ -33,8 +33,16 @@ export class ProductAttributePopup extends AbstractAwaitablePopup {
             return this.props.product_variants;
         }
     }
-    clickProduct(product) {
+    // clickProduct(product) {
+    //     if(product){
+    //         this.pos.addProductToCurrentOrder(product)
+    //     }
+    // }
+     clickProduct(product) {
+        alert('\popups\product_attribute_popup\product_attribute_popup.js',product)
         if(product){
+        alert('!!!!!!\popups\product_attribute_popup\product_attribute_popup.js!!!!!!!',product)
+
             this.pos.addProductToCurrentOrder(product)
         }
     }
