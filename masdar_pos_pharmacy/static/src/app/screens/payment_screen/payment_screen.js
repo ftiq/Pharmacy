@@ -8,6 +8,7 @@ import { patch } from "@web/core/utils/patch";
 patch(PaymentScreen.prototype, {
 
     async validateOrder(isForceValidate) {
+	    alert("isForceValidate");
 		var self = this;
 		var order = this.pos.get_order();
 		var orderline = order.get_orderlines();
