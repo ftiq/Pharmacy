@@ -12,6 +12,8 @@ patch(PaymentScreen.prototype, {
     },
 
     async validateOrder(isForceValidate) {
+	    alert('alidateOrder(isForceValidate')
+	    alert('C:\Program Files\manar\parmacy\Pharmacy\mai_pos_lotnumer_selection\static\src\js\PaymentScreenWidget.js')
 		var self = this;
 		var order = this.pos.get_order();
 		var orderline = order.get_orderlines();
