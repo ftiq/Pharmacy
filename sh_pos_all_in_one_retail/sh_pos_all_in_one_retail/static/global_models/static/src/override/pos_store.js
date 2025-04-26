@@ -10,6 +10,7 @@ import { VariantPopup } from "@sh_pos_all_in_one_retail/static/sh_pos_product_va
 patch(PosStore.prototype, {
 
     push_single_order(order) {
+        alert('push_single_order')
         var self = this;
         const result = super.push_single_order(order)
         var date = new Date()
@@ -44,6 +45,9 @@ patch(PosStore.prototype, {
     },
     async addProductToCurrentOrder(product, options = {}) { 
         alert("addProductToCurrentOrder")
+         alert('1',this.config.sh_show_qty_location)
+        alert('2',this.config.sh_display_stock)
+        alert( '3',product.type == "product")
         var order = this.get_order()
         var self = this;
         if (this.config.sh_show_qty_location && this.config.sh_display_stock && product.type == "product") {
