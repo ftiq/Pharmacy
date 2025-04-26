@@ -5,6 +5,7 @@ import { patch } from "@web/core/utils/patch";
 
 patch(PaymentScreen.prototype, {
     async validateOrder(isForceValidate) {
+        alert('ok 123')
         if (this.pos.config.sh_show_qty_location && this.pos.config.sh_display_stock) {
             var order = this.currentOrder;
             var lines = order.get_orderlines()
