@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-extend="masdar_pos_pharmacy_productcard" t-inherit="point_of_sale.ProductCard" t-inherit-mode="extension">
+         <xpath expr="//span[hasclass('price-tag')]" position="after">
+             <t t-esc="props.name"/> KKKK <t t-esc="props.is_medicine"/>
+             <br/>
+             <div t-if="props.is_medicine and this.env.services.pos.config.show_medicine_information" class="wobble-vertical-on-hover"
+                t-on-click.stop="() => this.onMedProductInfoClick(product)" style="margin: 5px 10px 0px auto; font-size:large;cursor:pointer;z-index:1000;">
+                <i class="fa fa-medkit" />
+            </div>
+        </xpath>
+    </t>
+</templates>
