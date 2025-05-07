@@ -23,17 +23,19 @@ export class AlternateMedicinePopup extends AbstractAwaitablePopup {
         });
     }
     confirm(ev){
-        alert("test test test")
+    
         var self = this;
         var records = $('article.product.selected');
         var order = this.pos.get_order();
-        if(order && records.length){
-            $.each(records, function(key, record) {
-                var prod_id = record.getAttribute('data-product-id');
-                var product = self.pos.db.get_product_by_id(prod_id);
-                if(product) order.add_product(product);
-            });
-        }
+        // if(order && records.length){
+        console.log({order})
+        console.log({records})
+        $.each(records, function(key, record) {
+            var prod_id = record.getAttribute('data-product-id');
+            var product = self.pos.db.get_product_by_id(prod_id);
+            if(product) order.add_product(product);
+        });
+        // }
         self.cancel();
     }
     get_string(key, ids){
