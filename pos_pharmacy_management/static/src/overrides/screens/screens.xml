@@ -272,7 +272,7 @@
                         productId="product.id"
                         price="product.getFormattedUnitPrice()"
                         imageUrl="product.getImageUrl()"
-                        onClick="() => {alert('hamza is testing') ; this.pos.addProductToCurrentOrder(product)}"
+                        onClick="() => this.pos.addProductToCurrentOrder(product)"
                     />
                 </t>
             </t>
