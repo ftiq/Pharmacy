@@ -4,6 +4,7 @@ import { patch } from "@web/core/utils/patch";
 
 patch(PosDB.prototype, {
     get_stock_by_product_id(id){
+        cosnole.log("sub-method")
         return this.quant_by_product_id[id]
     }
 })
