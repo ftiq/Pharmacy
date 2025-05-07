@@ -10,6 +10,7 @@ import { _t } from "@web/core/l10n/translation";
 patch(PosStore.prototype, {
     async _processData(loadedData) {
         await super._processData(...arguments);
+        console.log({loadedData})
         if (loadedData['quant_by_product_id']) {
             this.db.quant_by_product_id = loadedData['quant_by_product_id']
         }
