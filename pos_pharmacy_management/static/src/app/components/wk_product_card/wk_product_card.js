@@ -33,15 +33,18 @@ export class WkProductCard extends Component {
         });
     }
     async onMedProductInfoClick(product) {
+        alert("one")
         const info = await this.pos.getProductInfo(product, 1);
         var stocks = await this.pos.getProductStocks(product.id);
         if(stocks) product.stocks = stocks;
         this.popup.add(MedicineProductInfoPopup, { info: info , product: product });
     }
     async onAlternateMedicineClick(product) {
+        alert("two")
         this.popup.add(AlternateMedicinePopup, {product : product, med_ids : product.medicine_substitute_ids});
     }
     async onSaltBasedProductsClick(product) {
+        alert("three")
         var list = this.pos.db.get_product_by_category(this.pos.selectedCategoryId);
         var med_ids = [];
         list.forEach(prod => {
