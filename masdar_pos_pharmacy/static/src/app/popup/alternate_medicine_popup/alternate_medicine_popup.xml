@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-extend="masdar_pos_pharmacy_alternatemedicinepopup" t-inherit="pos_pharmacy_management.AlternateMedicinePopup" t-inherit-mode="extension">
+         <xpath expr="//div[hasclass('wk_popup')]" position="replace">
+             <div class="popup wk_popup popup-selection" id="alternate_med_popup">
+            <header class="title"> <t t-esc="props.product.display_name"/> (Alternate Medicines) </header>
+
+            <div class="alt_med_grid_body">
+                    <t t-foreach="props.med_ids" t-as="alt_med_id" t-key="alt_med_id">
+                        <t t-set="product" t-value="pos.db.product_by_id[alt_med_id]"/>
+                        <ProductCard
+                            class="pos.productViewMode"
+                            name="product.display_name"
+                            productId="product.id"
+                            price="product.getFormattedUnitPrice()"
+                            imageUrl="product.getImageUrl()"
+                            onClick="() =>this.pos.addProductToCurrentOrder(product)"
+                        />
+                    </t>
+                </div>
+
+            <footer class="footer modal-footer">
+                <div class="button btn btn-lg btn-primary" t-on-click="confirm">Add Products</div>
+                <div class="button cancel btn btn-lg btn-primary" t-on-click="cancel">Cancel</div>
+            </footer>
+        </div>
+        </xpath>
+    </t>
+</templates>
