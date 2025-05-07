@@ -45,7 +45,9 @@ patch(PosStore.prototype, {
     async addProductToCurrentOrder(product, options = {}) {
         var order = this.get_order()
         var self = this;
+        console.log("outer")
         if (this.config.sh_show_qty_location && this.config.sh_display_stock && product.type == "product") {
+            console.log("11111")
             var sh_min_qty = this.config.sh_min_qty
             var location_id = this.config.sh_pos_location ? this.config.sh_pos_location[0] : false
 
@@ -81,26 +83,33 @@ patch(PosStore.prototype, {
                     await super.addProductToCurrentOrder(...arguments)
                 }
             } else {
+                console.log("222222")
                 if ((stock_qty - 1) <= sh_min_qty) {
+                    console.log("22221111111")
                     const { confirmed, payload } = await this.env.services.popup.add(ProductStockRestrict, {
                         title: _t(product.display_name),
                         body: _t('Minimum availabe quantity is ' + sh_min_qty),
                         'product': product,
                     });
                     if (confirmed) {
+                        console.log("confirmed")
                         await super.addProductToCurrentOrder(...arguments)
                     }
                 } else {
+                    console.log("2222222_22222")
                     await super.addProductToCurrentOrder(...arguments)
                 }
             }
         } else {
+            console.log("kkjsdfsldfsdfsdf")
             await super.addProductToCurrentOrder(...arguments)
         }
 
         if( self.config.sh_pos_enable_product_variants && self.config.sh_pos_display_alternative_products ){
+            console.log("000knsbdfjshdshdfsdfsdfsdfsdf")
             var alternative_products = []
             if(product.sh_alternative_products && product.sh_alternative_products.length){
+                console.log("oqhwn3274bgg,3453fsdf")
                 for (let sub_pro_id of product.sh_alternative_products){
                     var sub_pro = self.db.product_by_id[sub_pro_id]    
                     alternative_products.push(sub_pro)
