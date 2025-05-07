@@ -17,7 +17,7 @@ export class WkProductCard extends Component {
         onClick: { type: Function, optional: true },
     };
     static defaultProps = {
-        onClick: () => {},
+        onClick: () => alert("Hamza is testing"),
         class: "",
     };
     
