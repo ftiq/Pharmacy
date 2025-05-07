@@ -43,6 +43,7 @@ patch(PosStore.prototype, {
         return result
     },
     async addProductToCurrentOrder(product, options = {}) {
+        console.log({product})
         var order = this.get_order()
         var self = this;
         console.log("outer")
