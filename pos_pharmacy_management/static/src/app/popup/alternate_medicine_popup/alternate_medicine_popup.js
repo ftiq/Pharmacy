@@ -23,6 +23,7 @@ export class AlternateMedicinePopup extends AbstractAwaitablePopup {
         });
     }
     confirm(ev){
+        alert("test test test")
         var self = this;
         var records = $('article.product.selected');
         var order = this.pos.get_order();
