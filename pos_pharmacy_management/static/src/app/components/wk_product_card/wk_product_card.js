@@ -27,12 +27,14 @@ export class WkProductCard extends Component {
         this.popup = useService("popup");
     }
     onMounted() {
+        console.log("sdfsdfsdfsdfsdfsdfsdf\n\n\n\n\n\n\n\n")
         $('.pos .product').on('dragstart', function (event) {
             event.originalEvent.dataTransfer.clearData();
             event.originalEvent.dataTransfer.setData("text", event.currentTarget.dataset.productId);
         });
     }
     async onMedProductInfoClick(product) {
+        console.log("ppppppppp")
         alert("one")
         const info = await this.pos.getProductInfo(product, 1);
         var stocks = await this.pos.getProductStocks(product.id);
@@ -59,6 +61,7 @@ export class WkProductCard extends Component {
         this.popup.add(AlternateMedicinePopup, {product : product, med_ids : med_ids});
     }
     get_string(key, ids){
+        console.log("Hamza")
         var self = this;
         var str = '';
         var products = self.pos.db.product_by_id;
