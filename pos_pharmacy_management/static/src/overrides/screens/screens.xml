@@ -265,7 +265,7 @@
     <t t-name="pos_pharmacy_management.ProductsWidget" t-inherit="point_of_sale.ProductsWidget" t-inherit-mode="extension" owl="1">
         <xpath expr="//t[@t-foreach='productsToDisplay']" position="replace">
             <t t-if="pos.config.product_display_type == 'list'">
-<!--                 <t t-foreach="productsToDisplay" t-as="product" t-key="product.id">
+                <t t-foreach="productsToDisplay" t-as="product" t-key="product.id">
                     <WkProductCard
                         class="pos.productViewMode"
                         name="product.display_name"
@@ -274,8 +274,7 @@
                         imageUrl="product.getImageUrl()"
                         onClick="() => this.pos.addProductToCurrentOrder(product)"
                     />
-                </t> -->
-                <p>hamza is testing</p>
+                </t>
             </t>
             <t t-else="">
                 <t t-foreach="productsToDisplay" t-as="product" t-key="product.id">
