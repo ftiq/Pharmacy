@@ -48,7 +48,7 @@ patch(PosStore.prototype, {
         var order = this.get_order()
         var self = this;
         console.log("outer")
-        if (true) { //this.config.sh_show_qty_location && this.config.sh_display_stock && product.type == "product") {
+        if (this.config.sh_show_qty_location && this.config.sh_display_stock && product.type == "product") {
             console.log("11111")
             var sh_min_qty = this.config.sh_min_qty
             var location_id = this.config.sh_pos_location ? this.config.sh_pos_location[0] : false
