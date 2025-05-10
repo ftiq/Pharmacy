@@ -10,10 +10,12 @@ ProductCard.props['product_variant_count'] = ""
 ProductCard.props['type'] = ""
 patch(ProductCard.prototype, {
     get get_display_stock() {
+        console.log({props})
         var product_id = this.props.productId
         var location_id = this.env.services.pos.config.sh_pos_location ? this.env.services.pos.config.sh_pos_location[0] : false
         var stocks = this.env.services.pos.db.get_stock_by_product_id(product_id)
         var qty = 0.00
+        console.log({location_id,stocks,product_id},'\n\n\n\n\n\n')
         if (location_id && stocks && stocks.length) {
             var sh_stock = stocks.filter((stock) => stock.location_id == location_id)
             if (sh_stock && sh_stock.length) {
