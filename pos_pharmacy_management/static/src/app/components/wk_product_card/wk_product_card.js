@@ -20,6 +20,7 @@ export class WkProductCard extends Component {
         onClick: () => alert("Hamza is testing"),
         class: "",
     };
+
     
     setup() {
         super.setup(...arguments);
@@ -33,6 +34,12 @@ export class WkProductCard extends Component {
             event.originalEvent.dataTransfer.setData("text", event.currentTarget.dataset.productId);
         });
     }
+
+
+    hamzaTestClick() {
+        alert("hamza is testing");
+    }
+    
     async onMedProductInfoClick(product) {
         console.log("ppppppppp")
         alert("one")
